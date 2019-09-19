@@ -19,76 +19,16 @@ const images = [image1, image2, image3, image4];
 const thumbs = [image1Thumb, image2Thumb, image3Thumb, image4Thumb];
 
 const titles = [
+  'Ce Nes Un Cat',
+  'not a dog',
+  'not a frog',
   '',
-  <span>
-    by&nbsp;
-    <a className="creditLink" href="http://flickr.com/photos/titrans/">
-      quatre mains
-    </a>
-    &nbsp; (
-    <a
-      className="creditLink"
-      href="http://creativecommons.org/licenses/by/2.0/"
-      title="Attribution License"
-    >
-      Some rights reserved
-    </a>
-    )
-  </span>,
-  <span>
-    by&nbsp;
-    <a className="creditLink" href="http://flickr.com/photos/lachlanrogers/">
-      latch.r
-    </a>
-    &nbsp; (
-    <a
-      className="creditLink"
-      href="http://creativecommons.org/licenses/by-sa/2.0/"
-      title="Attribution-ShareAlike License"
-    >
-      Some rights reserved
-    </a>
-    )
-  </span>,
-  <span>
-    by&nbsp;
-    <a className="creditLink" href="http://flickr.com/photos/fazen/">
-      fazen
-    </a>
-    &nbsp; (
-    <a
-      className="creditLink"
-      href="http://creativecommons.org/licenses/by/2.0/"
-      title="Attribution License"
-    >
-      Some rights reserved
-    </a>
-    )
-  </span>,
 ];
 
 const captions = [
-  'Cat in the snow',
   '',
-  <p>
-    .. not in the&nbsp;
-    <em>mood</em>
-    &nbsp;for games right now
-    <br />
-    ...
-    <br />
-    ...
-    <br />
-    ...
-    <br />
-    ...
-    <br />
-    ...
-    <br />
-    ...
-    <br />
-    C&#39;mon. Seriously.
-  </p>,
+  '',
+  '',
   '',
 ];
 
@@ -112,7 +52,7 @@ class App extends Component {
   }
 
   openLightbox() {
-    this.setState({ isOpen: true });
+    this.setState({ index: 2, isOpen: true });
   }
 
   closeLightbox() {
@@ -133,7 +73,7 @@ class App extends Component {
 
   render() {
     let lightbox;
-    if (this.state.isOpen) {
+    // if (this.state.isOpen) {
       lightbox = (
         <Lightbox
           mainSrc={images[this.state.index]}
@@ -154,7 +94,7 @@ class App extends Component {
           imageCaption={captions[this.state.index]}
         />
       );
-    }
+    // }
 
     return (
       <div>
