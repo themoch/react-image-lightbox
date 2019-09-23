@@ -60,6 +60,7 @@
     "> 1%"
   ],
   "dependencies": {
+    "@modular-css/rollup": "^25.0.0",
     "prop-types": "^15.6.2",
     "react-modal": "^3.8.1"
   },

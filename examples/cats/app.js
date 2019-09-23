@@ -73,7 +73,7 @@ class App extends Component {
 
   render() {
     let lightbox;
-    // if (this.state.isOpen) {
+    if (this.state.isOpen) {
       lightbox = (
         <Lightbox
           mainSrc={images[this.state.index]}
@@ -94,7 +94,7 @@ class App extends Component {
           imageCaption={captions[this.state.index]}
         />
       );
-    // }
+    }
 
     return (
       <div>

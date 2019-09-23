@@ -26,7 +26,7 @@ import {
   MIN_SWIPE_DISTANCE,
 } from './constant';
 
-import DefaultStyles from './style.css';
+import Styles from './style.css';
 
 class ReactImageLightbox extends Component {
   static isTargetMatchImage(target) {
@@ -108,8 +108,8 @@ class ReactImageLightbox extends Component {
       loadErrorStatus: {},
     };
 
-    // this.Styles = this.props.cssSrc || DefaultStyles;
-    this.Styles = DefaultStyles;
+    // Styles = this.props.cssSrc || DefaultStyles;
+    // Styles = DefaultStyles;
 
     // Refs
     this.outerEl = React.createRef();
@@ -138,7 +138,7 @@ class ReactImageLightbox extends Component {
     this.requestMovePrev = this.requestMovePrev.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // Timeouts - always clear it before umount
     this.timeouts = [];
 
@@ -222,7 +222,7 @@ class ReactImageLightbox extends Component {
     this.loadAllImages();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // Iterate through the source types for prevProps and nextProps to
     //  determine if any of the sources changed
     let sourcesChanged = false;
@@ -1335,11 +1335,11 @@ class ReactImageLightbox extends Component {
       if (bestImageInfo === null && hasTrueValue(loadErrorStatus)) {
         images.push(
           <div
-            className={`${imageClass} ${this.Styles.ril__image} ril-errored`}
+            className={`${imageClass} ${Styles.ril__image} ril-errored`}
             style={imageStyle}
             key={this.props[srcType] + keyEndings[srcType]}
           >
-            <div className={this.Styles.ril__errorContainer}>
+            <div className={Styles.ril__errorContainer}>
               {this.props.imageLoadErrorMessage}
             </div>
           </div>
@@ -1349,12 +1349,12 @@ class ReactImageLightbox extends Component {
       }
       if (bestImageInfo === null) {
         const loadingIcon = (
-          <div className={`${this.Styles.ril__loadingCircle} ${this.Styles.ril__loadingContainer__icon}`}>
+          <div className={`${Styles.ril__loadingCircle} ${Styles.ril__loadingContainer__icon}`}>
             {[...new Array(12)].map((_, index) => (
               <div
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
-                className={this.Styles.ril__loadingCirclePoint}
+                className={Styles.ril__loadingCirclePoint}
               />
             ))}
           </div>
@@ -1363,11 +1363,11 @@ class ReactImageLightbox extends Component {
         // Fall back to loading icon if the thumbnail has not been loaded
         images.push(
           <div
-            className={`${imageClass} ${this.Styles.ril__image}`}
+            className={`${imageClass} ${Styles.ril__image}`}
             style={imageStyle}
             key={this.props[srcType] + keyEndings[srcType]}
           >
-            <div className={this.Styles.ril__loadingContainer}>{loadingIcon}</div>
+            <div className={Styles.ril__loadingContainer}>{loadingIcon}</div>
           </div>
         );
 
@@ -1379,20 +1379,20 @@ class ReactImageLightbox extends Component {
         imageStyle.backgroundImage = `url('${imageSrc}')`;
         images.push(
           <div
-            className={`${imageClass} ${this.Styles.ril__image} ${this.Styles.ril__imageDiscourager}`}
+            className={`${imageClass} ${Styles.ril__image} ${Styles.ril__imageDiscourager}`}
             onDoubleClick={this.handleImageDoubleClick}
             onWheel={this.handleImageMouseWheel}
             style={imageStyle}
             key={imageSrc + keyEndings[srcType]}
           >
-            <div className={this.Styles.ril__downloadBlocker} />
+            <div className={Styles.ril__downloadBlocker} />
           </div>
         );
       } else {
         images.push(
           <img
             {...(imageCrossOrigin ? { crossOrigin: imageCrossOrigin } : {})}
-            className={`${imageClass} ${this.Styles.ril__image}`}
+            className={`${imageClass} ${Styles.ril__image}`}
             onDoubleClick={this.handleImageDoubleClick}
             onWheel={this.handleImageMouseWheel}
             onDragStart={e => e.preventDefault()}
@@ -1410,17 +1410,17 @@ class ReactImageLightbox extends Component {
 
     const zoomMultiplier = this.getZoomMultiplier();
     // Next Image (displayed on the right)
-    addImage('nextSrc', this.Styles.ril__imageNext, {
+    addImage('nextSrc', Styles.ril__imageNext, {
       x: boxSize.width,
     });
     // Main Image
-    addImage('mainSrc', this.Styles.ril__imageCurrent, {
+    addImage('mainSrc', Styles.ril__imageCurrent, {
       x: -1 * offsetX,
       y: -1 * offsetY,
       zoom: zoomMultiplier,
     });
     // Previous Image (displayed on the left)
-    addImage('prevSrc', this.Styles.ril__imagePrev, {
+    addImage('prevSrc', Styles.ril__imagePrev, {
       x: -1 * boxSize.width,
     });
 
@@ -1467,7 +1467,7 @@ class ReactImageLightbox extends Component {
       >
         <div // eslint-disable-line jsx-a11y/no-static-element-interactions
           // Floating modal with closing animations
-          className={`${this.Styles.ril__outer} ${this.Styles.ril__outerAnimating} ${
+          className={`${Styles.ril__outer} ${Styles.ril__outerAnimating} ${
             this.props.wrapperClassName
           } ${isClosing ? 'ril-closing ril__outerClosing' : ''}`}
           style={{
@@ -1487,7 +1487,7 @@ class ReactImageLightbox extends Component {
         >
           <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
             // Image holder
-            className={this.Styles.ril__inner}
+            className={Styles.ril__inner}
             onClick={clickOutsideToClose ? this.closeIfClickInner : undefined}
           >
             {images}
@@ -1496,7 +1496,7 @@ class ReactImageLightbox extends Component {
           {prevSrc && (
             <button // Move to previous image button
               type="button"
-              className={`${this.Styles.ril__navButtons} ${this.Styles.ril__navButtonPrev}`}
+              className={`${Styles.ril__navButtons} ${Styles.ril__navButtonPrev}`}
               key="prev"
               aria-label={this.props.prevLabel}
               onClick={!this.isAnimating() ? this.requestMovePrev : undefined} // Ignore clicks during animation
@@ -1506,7 +1506,7 @@ class ReactImageLightbox extends Component {
           {nextSrc && (
             <button // Move to next image button
               type="button"
-              className={`${this.Styles.ril__navButtons} ${this.Styles.ril__navButtonNext}`}
+              className={`${Styles.ril__navButtons} ${Styles.ril__navButtonNext}`}
               key="next"
               aria-label={this.props.nextLabel}
               onClick={!this.isAnimating() ? this.requestMoveNext : undefined} // Ignore clicks during animation
@@ -1514,22 +1514,22 @@ class ReactImageLightbox extends Component {
           )}
 
           <div // Lightbox toolbar
-            className={this.Styles.ril__toolbar}
+            className={Styles.ril__toolbar}
           >
-            <ul className={`${this.Styles.ril__toolbarSide} ${this.Styles.ril__toolbarLeftSide}`}>
-              <li className={this.Styles.ril__toolbarItem}>
-                <span className={this.Styles.ril__toolbarItemChild}>
+            <ul className={`${Styles.ril__toolbarSide} ${Styles.ril__toolbarLeftSide}`}>
+              <li className={Styles.ril__toolbarItem}>
+                <span className={Styles.ril__toolbarItemChild}>
                   {imageTitle}
                 </span>
               </li>
             </ul>
 
-            <ul className={`${this.Styles.ril__toolbarSide} ${this.Styles.ril__toolbarRightSide}`}>
+            <ul className={`${Styles.ril__toolbarSide} ${Styles.ril__toolbarRightSide}`}>
               {toolbarButtons &&
                 toolbarButtons.map((button, i) => (
                   <li
                     key={`button_${i + 1}`}
-                    className={this.Styles.ril__toolbarItem}
+                    className={Styles.ril__toolbarItem}
                   >
                     {button}
                   </li>
@@ -1542,11 +1542,11 @@ class ReactImageLightbox extends Component {
                     key="zoom-in"
                     aria-label={this.props.zoomInLabel}
                     className={[
-                      this.Styles.ril__toolbarItemChild,
-                      this.Styles.ril__builtinButton,
-                      this.Styles.ril__zoomInButton,
+                      Styles.ril__toolbarItemChild,
+                      Styles.ril__builtinButton,
+                      Styles.ril__zoomInButton,
                       ...(zoomLevel === MAX_ZOOM_LEVEL
-                        ? [this.Styles.ril__builtinButtonDisabled]
+                        ? [Styles.ril__builtinButtonDisabled]
                         : []),
                     ].join(' ')}
                     ref={this.zoomInBtn}
@@ -1563,17 +1563,17 @@ class ReactImageLightbox extends Component {
               )}
 
               {enableZoom && (
-                <li className={this.Styles.ril__toolbarItem}>
+                <li className={Styles.ril__toolbarItem}>
                   <button // Lightbox zoom out button
                     type="button"
                     key="zoom-out"
                     aria-label={this.props.zoomOutLabel}
                     className={[
-                      this.Styles.ril__toolbarItemChild,
-                      this.Styles.ril__builtinButton,
-                      this.Styles.ril__zoomOutButton,
+                      Styles.ril__toolbarItemChild,
+                      Styles.ril__builtinButton,
+                      Styles.ril__zoomOutButton,
                       ...(zoomLevel === MIN_ZOOM_LEVEL
-                        ? [this.Styles.ril__builtinButtonDisabled]
+                        ? [Styles.ril__builtinButtonDisabled]
                         : []),
                     ].join(' ')}
                     ref={this.zoomOutBtn}
@@ -1589,12 +1589,12 @@ class ReactImageLightbox extends Component {
                 </li>
               )}
 
-              <li className={this.Styles.ril__toolbarItem}>
+              <li className={Styles.ril__toolbarItem}>
                 <button // Lightbox close button
                   type="button"
                   key="close"
                   aria-label={this.props.closeLabel}
-                  className={`${this.Styles.ril__toolbarItemChild} ${this.Styles.ril__builtinButton} ${this.Styles.ril__closeButton}`}
+                  className={`${Styles.ril__toolbarItemChild} ${Styles.ril__builtinButton} ${Styles.ril__closeButton}`}
                   onClick={!this.isAnimating() ? this.requestClose : undefined} // Ignore clicks during animation
                 />
               </li>
@@ -1606,10 +1606,10 @@ class ReactImageLightbox extends Component {
             <div // Image caption
               onWheel={this.handleCaptionMousewheel}
               onMouseDown={event => event.stopPropagation()}
-              className={this.Styles.ril__caption}
+              className={Styles.ril__caption}
               ref={this.caption}
             >
-              <div className={this.Styles.ril__captionContent}>
+              <div className={Styles.ril__captionContent}>
                 {this.props.imageCaption}
               </div>
             </div>
